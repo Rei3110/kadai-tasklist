@@ -1,25 +1,23 @@
 class TasklistsController < ApplicationController
   
   def index
-    @tasklists = Tasklists.all
+    @tasks = Task.all
   end
 
   def show
-    @tasklists = Tasklists.find(params[:id])
+    @task = Task.find(params[:id])
   end
 
   def new
-    def new
-     @tasklists = Tasklists.new
-  end
+     @task = Task.new
   end
 
  def create
-    @tasklists = Tasklists.new(tasklists_params)
+    @task = Task.new(task_params)
 
-    if @tasklists.save
+    if @task.save
       flash[:success] = 'Task が正常に投稿されました'
-      redirect_to @tasklists
+      redirect_to @task
     else
       flash.now[:danger] = 'Task が投稿されませんでした'
       render :new
@@ -27,15 +25,15 @@ class TasklistsController < ApplicationController
   end
 
    def edit
-    @tasklists = Tasklists.find(params[:id])
+    @task = Task.find(params[:id])
   end
 
   def update
-    @tasklists = Tasklists.find(params[:id])
+    @task = Task.find(params[:id])
 
-    if @tasklists.update(tasklists_params)
+    if @task.update(task_params)
       flash[:success] = 'タスク は正常に更新されました'
-      redirect_to @message
+      redirect_to @task
     else
       flash.now[:danger] = 'タスク は更新されませんでした'
       render :edit
@@ -43,16 +41,16 @@ class TasklistsController < ApplicationController
   end
 
   def destroy
-    @tasklists = Tasklists.find(params[:id])
-    @tasklists.destroy
+    @task = Task.find(params[:id])
+    @task.destroy
 
     flash[:success] = 'Task は正常に削除されました'
-    redirect_to messages_url
+    redirect_to tasks_url
   end
 
   private
 
   # Strong Parameter
-  def message_params
-    params.require(:message).permit(:content)
+  def task_params
+    params.require(:task).permit(:content)
   endend

@@ -1,13 +1,13 @@
 <h1>id = 
-<%= @tasklists.id %>
+<%= @task.id %>
  のメッセージ詳細ページ</h1>
 
 <p>
-<%= @tasklists.content %>
+<%= @task.content %>
 </p>
 
-<%= link_to '一覧に戻る', tasklists_path %>
+<%= link_to '一覧に戻る', tasks_path %>
 
-<%= link_to 'このメッセージを編集する', edit_tasklists_path_path(@tasklists_path) %>
+<%= link_to 'このメッセージを編集する', edit_task_path(@task) %>
 
-<%= link_to 'このメッセージを削除する', @tasklists, method: :delete, data: { confirm: '本当に削除してよろしいですか？' } %>
+<%= link_to 'このメッセージを削除する', @tasks, method: :delete, data: { confirm: '本当に削除してよろしいですか？' } %>
