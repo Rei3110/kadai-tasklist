@@ -3,10 +3,14 @@ class UsersController < ApplicationController
   
   def index
     @users = User.all.page(params[:page])
+    @tasks = current_user.tasks.order('created_at DESC').page(params[:page])
+    @tasks = Task.all.page(params[:page])
   end
 
   def show
     @user = User.find(params[:id])
+    @tasks = @user.tasks.order('created_at DESC').page(params[:page])
+    counts @user
   end
 
   def new

@@ -1,8 +1,10 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
+  before_action :require_user_logged_in
   
   def index
-    @tasks = Task.all.page(params[:page])
+    @tasks = current_user.tasks.build  # form_for 用
+    
   end
 
   def show
@@ -14,6 +16,7 @@ class TasksController < ApplicationController
 
  def create
     @task = Task.new(task_params)
+    @task = current_user.tasks.build(task_params)
 
     if @task.save
       flash[:success] = 'タスクが正常に追加されました'
@@ -41,7 +44,7 @@ class TasksController < ApplicationController
     @task.destroy
 
     flash[:success] = 'タスクは正常に削除されました'
-    redirect_to tasks_url
+     redirect_back(fallback_location: root_path)
   end
 
   private
@@ -54,5 +57,14 @@ class TasksController < ApplicationController
    def set_task
     @task = Task.find(params[:id])
   end
+ 
+ 
+ def correct_user
+    @micropost = current_user.microposts.find_by(id: params[:id])
+    unless @micropost
+      redirect_to root_path
+    end
+  end
+ 
   
   end
